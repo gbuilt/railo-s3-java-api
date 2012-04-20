@@ -101,7 +101,7 @@
 			<CFCATCH type="any">
 				<cfreturn "" />
 			</CFCATCH>
-		</CFCATCH>
+		</CFTRY>
 	</cffunction>
 
 
@@ -136,7 +136,7 @@
 			<CFCATCH type="any">
 				<cfreturn "" /><!--- File doesn't exist in S3 --->
 			</CFCATCH>
-		</CFCATCH>
+		</CFTRY>
 	</cffunction>
 	
 	
