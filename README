@@ -1,9 +1,28 @@
 s3api.cfc
 
-Allows File Upload to S3 with public or private access (acl) and correct metadata.
-Allows links to public and private files with exiry timeouts.
+Allows File Upload to S3 with public or private access (acl) and correct metadata (auto-detected content-type and file-name).
+Allows S3 Oject Copy (duplicate) to another location within the same bucket.
+Allows S3 Object delete.
+Allows links to public objects without exiration, and private objects with exiration on authenticated link.
+Allows S3 Directory listing - can be used to verify existence of a single object.
 
-Copyright (c) 2012, Garrett Bach
+
+Requirements:
+
+AWS JAVA API Jar file located in the Railo (or coldfusion) [home]/lib path or known mapping. If it's a local subdirectory
+or mapping be sude to  change the 'com.amazonaws' method prefix to your custom path in 'init', 'upload', and copy' methods. 
+'(Remember, use periods in place of slashes for your local subdirectory path.)
+
+
+Example usage:
+
+Application Scople Caching: <cfset application.s3api = createObject("component","s3api").init("sOMeLOnGeNCryPtEdStrINgHOLdIngtHeaWsSEcrET") />
+<cfset command = application.s3api.upload(source="#expandPath('/')#tmp/testfile.txt",destination="/permanent/location/testfile.txt") />
+<cfset command = application.s3api.getlink(file="") />
+See the notes and comments in the CFC more more details.
+
+
+Copyright (c) 2012, GBUILT
 
 Licensed under the Apache License, Version 2.0 (the "License").
 You may not use this file except in compliance with the License.
@@ -11,21 +30,6 @@ You may obtain a copy of the License at
 
 http://www.apache.org/licenses/LICENSE-2.0
 
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-
-Example usage:
-
-Application Scople Caching: <cfset application.s3api = createObject("component","s3api").init() />
-<cfset command = application.s3api.upload(filepath="#expandPath('/')#tmp/testfile.txt",s3path="/permanent/location/testfile.txt") />
-<cfset command = application.s3api.getlink(s3path="") />
-
-
-Later versions will include additional api functions, beginning with COPY and DELETE.
-
-
-
-
+Unless required by applicable law or agreed to in writing, software distributed under the License is distributed
+on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and limitations under the License.
